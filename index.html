@@ -26,11 +26,9 @@
 					default:
 						throw "unknown";
 				}
-				// 5 <-> 50
-				// 196 <-> 58
+				// 5 <-> 55
 				address = bitcoin.address.toBase58Check(decoded['hash'], version);
 			} catch(err) {
-        console.log('err', err);
 				message = "Please enter a valid address."
 			    address = "";
 			}
@@ -64,5 +62,6 @@
 		
 		<label id="message"/>
 
+    <footer style="margin-top: 7em;">This tool is <a href="https://github.com/emc2foundation/emc2-p2sh-convert">Open Source</a>. It can be downloaded and run offline for added security.</footer>
 	</div>
 </html>
