@@ -1,0 +1,68 @@
+<html>
+	<head>
+		<title>Einsteinium P2SH Converter</title>
+		<link rel="stylesheet" href="bootstrap_v3.3.7.min.css">
+		<link rel="shortcut icon" type="image/png" href="einsteinium.png">
+	</head>
+	
+
+	<script src='bitcoinjs.min.js'></script>
+	<script type="text/javascript">
+		function convert() {
+			try {
+				address = document.getElementById('address').value;
+				decoded = bitcoin.address.fromBase58Check(address);
+				version = decoded['version']
+
+				switch (version) {
+          case 5:
+						message = "Mainnet p2sh address: ";
+						version = 55;
+						break;
+          case 55:
+            message = "Mainnet p2sh address (deprecated): ";
+            version = 5;
+            break;
+					default:
+						throw "unknown";
+				}
+				// 5 <-> 50
+				// 196 <-> 58
+				address = bitcoin.address.toBase58Check(decoded['hash'], version);
+			} catch(err) {
+        console.log('err', err);
+				message = "Please enter a valid address."
+			    address = "";
+			}
+
+			document.getElementById('message').innerText = message + address;
+		}
+	</script>
+		<div class="container">
+<nav class="navbar navbar-default">
+
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Einsteinium P2SH Converter</a>
+    </div>
+   
+
+</nav>
+
+
+		<div class="form-group row">
+			<div class="col-md-4">
+				<label for="address">P2SH Value:</label>
+
+				<input class="form-control" id="address" size="40" value=""/>
+			</div>
+			<div class="col-md-12">
+				<button class="btn btn-primary" type="button" onclick="convert();" style="margin-top: 4px">Convert</button>
+			</div>
+		</div>
+		
+		
+		<label id="message"/>
+
+	</div>
+</html>
